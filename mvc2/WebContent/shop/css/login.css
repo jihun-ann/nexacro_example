@@ -1,0 +1,91 @@
+#login-wrap{
+	width: 500px;
+	min-height: 200px;
+	margin: 0 auto;
+	padding: 50px 0;
+	box-sizing: border-box; 
+}
+
+#login-form{
+	width: 100%;
+	height: 100%;
+}
+
+input{
+	width: 200px;
+	height: 30px;
+	margin-top: 10px;
+}
+#loginBtnn{
+	width: 80px;
+	height: 25px;
+	margin-top: 20px;
+}
+#pwFindBtn-wrap, #idFindBtn-wrap{
+	width: 50%;
+	height: 30px;
+	text-align: center;
+}
+#pwFindBtn,#idFindBtn{
+	font-size: 14px;
+	line-height: 40px;
+	cursor: pointer;
+	color: grey;
+}
+#pwFindBtn:hover, #idFindBtn:hover{
+	color: black;
+	font-weight: bold;
+}
+#modal{
+	display: none;
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,0.5);
+}
+#pwFindModal{
+	display: none;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 400px;
+	height: 200px;
+	background: white;
+	transform: translate(-50%,-50%);
+}
+#pwFindModal table{
+	margin: 22px auto;
+}
+
+#pwFindModal table tr td[colspan='2']{
+	text-align: center;
+	height: 60px;
+}
+#pwFindModal button{
+	width: 70px;
+	height: 25px;
+}
+#idFindModal{
+	display: none;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 400px;
+	height: 200px;
+	background: white;
+	transform: translate(-50%,-50%);
+}
+#idFindModal table{
+	margin: 22px auto;
+}
+
+#idFindModal table tr td[colspan='2']{
+	text-align: center;
+	height: 60px;
+}
+#idFindModal button{
+	width: 70px;
+	height: 25px;
+}

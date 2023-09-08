@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="AdminDao">  
+	<insert id="insertProd" parameterType="map">
+		insert into producttable(productseq,name,opcount,ordercount,"date") values(prod_seq.nextval,#{name},#{count},0,sysdate)
+	</insert>
+	
+	<insert id="insertProdOption" parameterType="map">
+		insert into product_option(optionseq,productseq,name,productcount,productprice) values(prod_op_seq.nextval,#{productseq},#{opname},#{prodcount},#{prodprice})
+	</insert>
+	
+	<delete id="deleteProdOption" parameterType="map">
+		delete from product_option where optionseq = #{optionseq} and productseq = #{productseq}
+	</delete>
+	<delete id="deleteProdOptionBasket" parameterType="map">
+		delete from basket where optionseq = #{optionseq}
+	</delete>
+	<delete id="deleteProdImage" parameterType="map">
+		delete from product_image where productseq = #{productseq} and space=#{space}
+	</delete>
+	
+	<select id="prodCurrVal" resultType="int">
+		SELECT prod_seq.currval FROM dual
+	</select>
+	
+	<insert id="insertProdImage" parameterType="map">
+		insert into product_image(imageseq,productseq,name,filename,space) values(prod_img_seq.nextval,#{id},#{name},#{filename},#{space})
+	</insert>
+	
+	<select id="countProdList" parameterType="map" resultType="int">
+		<if test="key eq 'all' or val eq ''">
+			SELECT count(*) from(
+				SELECT rownum AS num, d.* FROM 
+					(SELECT DISTINCT pd.*,im.filename FROM PRODUCTTABLE pd
+						LEFT JOIN PRODUCT_OPTION op ON op.PRODUCTSEQ=pd.PRODUCTSEQ 
+						LEFT JOIN (SELECT * FROM PRODUCT_IMAGE WHERE SPACE = 'simple') im ON im.PRODUCTSEQ=pd.PRODUCTSEQ 
+						LEFT JOIN (SELECT * FROM PRODUCT_IMAGE WHERE SPACE = 'detail') im2 ON im2.PRODUCTSEQ=pd.PRODUCTSEQ 
+						WHERE im.name LIKE '%'||#{val}||'%' or im2.name LIKE '%'||#{val}||'%' or pd.name LIKE '%'||#{val}||'%' or op.name LIKE '%'||#{val}||'%' 
+						ORDER BY pd.productseq asc) d)
+					ORDER BY num desc
+		</if>
+		<if test="key neq 'all' and val neq ''">
+			SELECT count(*) from(
+				SELECT rownum AS num, d.* FROM 
+					(SELECT DISTINCT pd.*,im.filename FROM PRODUCTTABLE pd
+						LEFT JOIN PRODUCT_OPTION op ON op.PRODUCTSEQ=pd.PRODUCTSEQ 
+						LEFT JOIN (SELECT * FROM PRODUCT_IMAGE WHERE SPACE = 'simple') im ON im.PRODUCTSEQ=pd.PRODUCTSEQ 
+						LEFT JOIN (SELECT * FROM PRODUCT_IMAGE WHERE SPACE = 'detail') im2 ON im2.PRODUCTSEQ=pd.PRODUCTSEQ 
+						WHERE 
+						<if test="key eq 'name'">
+							pd.name LIKE '%'||#{val}||'%' 
+						</if>	
+						<if test="key eq 'option'">
+							op.name LIKE '%'||#{val}||'%' 
+						</if>
+						ORDER BY pd.productseq asc) d)
+					ORDER BY num desc
+		</if>
+	</select>
+	
+	<select id="selectProdList" parameterType="map" resultType="ProductVO">
+		<if test="key eq 'all' or val eq ''">
+		SELECT * from(
+			SELECT rownum AS num, d.* FROM 
+				(SELECT DISTINCT pd.*,im.filename FROM PRODUCTTABLE pd
+					LEFT JOIN PRODUCT_OPTION op ON op.PRODUCTSEQ=pd.PRODUCTSEQ 
+					LEFT JOIN (SELECT * FROM PRODUCT_IMAGE WHERE SPACE = 'simple') im ON im.PRODUCTSEQ=pd.PRODUCTSEQ 
+					LEFT JOIN (SELECT * FROM PRODUCT_IMAGE WHERE SPACE = 'detail') im2 ON im2.PRODUCTSEQ=pd.PRODUCTSEQ 
+					WHERE im.name LIKE '%'||#{val}||'%' or im2.name LIKE '%'||#{val}||'%' or pd.name LIKE '%'||#{val}||'%' or op.name LIKE '%'||#{val}||'%' 
+					ORDER BY pd.productseq asc) d)
+				WHERE num BETWEEN #{startnum} AND #{endnum}
+				ORDER BY num desc
+		</if>
+		<if test="key neq 'all' and val neq ''">
+			SELECT * from(
+				SELECT rownum AS num, d.* FROM 
+					(SELECT DISTINCT pd.*,im.filename FROM PRODUCTTABLE pd
+						LEFT JOIN PRODUCT_OPTION op ON op.PRODUCTSEQ=pd.PRODUCTSEQ 
+						LEFT JOIN (SELECT * FROM PRODUCT_IMAGE WHERE SPACE = 'simple') im ON im.PRODUCTSEQ=pd.PRODUCTSEQ 
+						LEFT JOIN (SELECT * FROM PRODUCT_IMAGE WHERE SPACE = 'detail') im2 ON im2.PRODUCTSEQ=pd.PRODUCTSEQ 
+						WHERE 
+						<if test="key eq 'name'">
+							pd.name LIKE '%'||#{val}||'%' 
+						</if>	
+						<if test="key eq 'option'">
+							op.name LIKE '%'||#{val}||'%' 
+						</if>
+						ORDER BY pd.productseq asc) d)
+					WHERE num BETWEEN #{startnum} AND #{endnum}
+					ORDER BY num desc
+		</if>
+	</select>
+	
+	<select id="selectProdImage" parameterType="String" resultType="map">
+		SELECT pd.NAME, im.filename AS simple, im2.filename AS detail FROM PRODUCTTABLE pd
+			LEFT JOIN (SELECT * FROM PRODUCT_IMAGE WHERE SPACE = 'simple') im on im.PRODUCTSEQ = pd.PRODUCTSEQ
+			LEFT JOIN (SELECT * FROM PRODUCT_IMAGE WHERE SPACE = 'detail') im2 on im2.PRODUCTSEQ = pd.PRODUCTSEQ
+			WHERE PRODUCTSEQ = #{id}
+	</select>
+	
+	<select id="selectProdOption" parameterType="String" resultType="ProdOptionVO">
+		SELECT * FROM PRODUCT_OPTION WHERE PRODUCTSEQ = #{id}
+	</select>
+	
+	<update id="updateProdAdmin" parameterType="map">
+		update PRODUCTTABLE set name = #{name}, opcount=#{count} where productseq =#{id}
+	</update>
+	
+	<delete id="prodDelete" parameterType="map">
+		<if test="key == 0">
+			delete from PRODUCT_IMAGE where productseq = #{id}
+		</if>
+		<if test="key == 1">
+			delete from basket where productseq = #{id}
+		</if>
+		<if test="key == 2">
+			delete from PRODUCT_OPTION where productseq = #{id}
+		</if>
+		<if test="key == 3">
+			delete from PRODUCTTABLE where productseq = #{id}
+		</if>
+	</delete>
+	
+	
+	<select id="memberList" parameterType="map" resultType="MemberVO">
+		<if test="key eq 'all'">
+			SELECT * FROM 
+				(SELECT rownum AS num, m.* FROM(SELECT * from MEMBER  
+					WHERE id like'%'||#{val}||'%' OR name LIKE '%'||#{val}||'%' OR PHONE LIKE '%'||#{val}||'%'
+					ORDER BY MEMBERSEQ asc) m)
+				WHERE num BETWEEN #{startnum} AND #{endnum}
+			ORDER BY num DESC
+		</if>
+		<if test="key neq 'all'">
+			SELECT * FROM 
+				(SELECT rownum AS num, m.* FROM(SELECT * from MEMBER  
+					WHERE ${key} like '%'||#{val}||'%'
+					ORDER BY MEMBERSEQ asc) m)
+				WHERE num BETWEEN #{startnum} AND #{endnum}
+			ORDER BY num DESC
+		</if>
+	</select>
+	
+	<select id="memberListCount" parameterType="map" resultType="int">
+		<if test="key eq 'all'">
+			SELECT count(*) FROM 
+				(SELECT rownum AS num, m.* FROM MEMBER m 
+					WHERE id like'%'||#{val}||'%' OR name LIKE '%'||#{val}||'%' OR PHONE LIKE '%'||#{val}||'%'
+					)
+			ORDER BY num DESC
+		</if>
+		<if test="key neq 'all'">
+			SELECT count(*) FROM 
+				(SELECT rownum AS num, m.* FROM MEMBER m 
+					WHERE ${key} like '%'||#{val}||'%'
+					)
+			ORDER BY num DESC
+		</if>
+	</select>
+	
+	<update id="memberUpdateCompulsion" parameterType="MemberVO">
+		update member set name=#{name}, pass=#{pass}, phone=#{phone}, address=#{address} where memberseq=#{memberseq}
+	</update>
+	
+	<select id="prodOpCountAdmin" parameterType="String" resultType="int">
+		select count(*)from product_option where PRODUCTSEQ = #{id}
+	</select>
+	
+	<select id="selectOrderList" parameterType="map" resultType="OrderVO">
+		SELECT * FROM (
+			SELECT rownum num,a.* FROM(
+				SELECT ot.orderseq, ot."date",ot.DELIVERYSTATUS, opt.filename, opt.productname prodname, m.id memberid,m.name membername, ot.orderproductcount prodcount  FROM ORDERTABLE ot
+					LEFT JOIN (SELECT max(PRODUCTSEQ) PRODUCTSEQ, orderseq, max(productname) productname, max(filename) filename FROM ORDER_PRODUCTTABLE GROUP BY orderseq) opt ON opt.orderseq = ot.ORDERSEQ
+					LEFT JOIN "MEMBER" m ON ot.memberseq = m.MEMBERSEQ
+					<if test="key == 'all'">
+						WHERE opt.productname LIKE '%'||#{val}||'%' or m.id LIKE '%'||#{val}||'%' or m.name LIKE '%'||#{val}||'%'
+					</if>
+					<if test="key != 'all'">
+						WHERE ${key} LIKE '%'||#{val}||'%'
+					</if>
+					ORDER BY orderseq asc
+				)a
+			)
+		WHERE num BETWEEN #{startnum} AND #{endnum}
+		ORDER BY num DESC
+	</select>
+	
+	<select id="selectOrderCount" parameterType="map" resultType="int">
+		SELECT count(*)  FROM ORDERTABLE ot
+			LEFT JOIN (SELECT max(PRODUCTSEQ) PRODUCTSEQ, orderseq, max(productname) productname, max(filename) filename FROM ORDER_PRODUCTTABLE GROUP BY orderseq) opt ON opt.orderseq = ot.ORDERSEQ
+			LEFT JOIN "MEMBER" m ON ot.memberseq = m.MEMBERSEQ
+			<if test="key == 'all'">
+				WHERE opt.productname LIKE '%'||#{val}||'%' or m.id LIKE '%'||#{val}||'%' or m.name LIKE '%'||#{val}||'%'
+			</if>
+			<if test="key != 'all'">
+				WHERE ${key} LIKE '%'||#{val}||'%'
+			</if>
+	</select>
+	<select id="selectOrderMember" parameterType="string" resultType="OrderVO">
+		SELECT ot."date",ot.DELIVERYSTATUS, m.id memberid,m.name membername, ot.orderproductcount prodcount, ot.ADDRESS, ot.payment, ot.ordermessage FROM ORDERTABLE ot
+			LEFT JOIN "MEMBER" m ON ot.memberseq = m.MEMBERSEQ
+			WHERE ot.ORDERSEQ = #{orderseq}
+	</select>
+	<select id="selectOrderProd" parameterType="string" resultType="OrderProductVO">
+		SELECT opt.productseq, opt.productname, opt.optionseq, opt.optionname, opt.ordercount, opt.price ,opt.filename   FROM ORDER_PRODUCTTABLE opt
+			WHERE opt.ORDERSEQ = #{orderseq}
+	</select>
+	<update id="updateOrderStatusAdmin" parameterType="map">
+		update ordertable set deliverystatus = #{code} where orderseq =#{orderseq}
+	</update>
+	
+	<update id="updateProdCountAdmin" parameterType="map">
+		update product_option set productcount = #{count} where optionseq =#{opseq}
+	</update>
+	<delete id="deleteMemberseq" parameterType="map">
+		<if test="key == 0">
+			delete from basket where memberseq = #{memseq}
+		</if>
+		<if test="key == 1">
+			delete from memberlog where id =#{member}
+		</if>
+		<if test="key == 2">
+			delete from member where memberseq =#{memseq}
+		</if>
+	</delete>
+	
+	<select id="selectmemberid" parameterType="String" resultType="String">
+		select id from member where memberseq = #{memseq}
+	</select>
+</mapper>
+
+
+
+
+
+
+

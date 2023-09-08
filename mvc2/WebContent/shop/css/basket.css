@@ -1,0 +1,170 @@
+#basket-wrap{
+	width: 1000px;
+	min-height: 200px;
+	margin: 20px auto;
+}
+.prod-wrap{
+	width: 850px;
+	min-height: 300px;
+	margin: 10px auto;
+	display:flex;
+	border: 1px solid #cdcdcd;
+	border-radius: 5px;
+}
+.prodImg{
+	width: 350px;
+	height: 260px;
+	margin: 20px;
+}
+.prodInfo{
+	width: 440px;
+	padding: 40px;
+	box-sizing: border-box;
+	position: relative;
+}
+.prodName{
+	font-size: 35px;
+	margin: 20px 0;
+}
+.prodOption{
+	font-size: 16px;
+	margin: 8px;
+	color: grey;
+}
+.optionRe{
+    width: 45px;
+    height: 22px;
+    line-height: 22px;
+    border: 1px solid #cdcdcd;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+    border-radius: 3px;
+    font-size: 16px;
+    color: grey;
+}
+.optionRe:HOVER{
+	background: grey;
+	color: white;
+}
+.prodPrice{
+	font-size: 25px;
+	right: 40px;
+	bottom: 20px;
+	position: absolute;
+}
+#basketBtn-wrap{
+	width: 850px;
+	height: 30px;
+	margin: 0 auto;
+    display: flex;
+    justify-content: flex-end;
+}
+#basketBtn-wrap button{
+	width: 80px;
+	height: 30px;
+	cursor: pointer;
+	margin: 0 5px;
+	background: none;
+	border: 1px solid #cdcdcd;
+	border-radius: 5px;
+}
+#modal-wrap{
+	position: fixed;
+	display: none;
+	left: 0;
+	top: 0;
+	width: 100%;
+ 	height: 100%;
+	background: rgba(0,0,0,0.5);
+}
+#modal{
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%,-50%);
+	width: 500px;
+	min-height: 200px;
+	background: white;
+}
+#modal-prodName{
+	width: 200px;
+    height: 80px;
+    font-size: 30px;
+    font-weight: bold;
+    line-height: 80px;
+    text-align: center;
+    margin: 0 auto;
+    display: block;
+}
+#select-wrap{
+	width: 90%;
+	height: 30px;
+	margin: 20px auto;
+	text-align: center;
+}
+#select-wrap select{
+	width: 200px;
+	height: 30px;
+	font-size: 17px;
+}
+#hasOption-wrap{
+	width: 90%;
+	height: auto;
+	margin: 20px auto;
+}
+.hasOption{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    height: 25px;
+    padding: 5px 0;
+    border-top: 1px solid #cdcdcd;
+}
+.hasOption span{
+	width: 100px;
+	text-align: center;
+}
+.hasOption input{
+	width: 70px;
+}
+.hasOption button{
+	width: 25px;
+	height: 25px;
+}
+#modalBtn-wrap{
+	width: 200px;
+	height: 30px;
+	line-height: 30px;
+	padding: 5px 0;
+	margin: 0 auto;
+	text-align: center;
+}
+#modalBtn-wrap button{
+	width: 70px;
+}
+
+#addOption-wrap{
+	width: 90%;
+	height: auto;
+	margin: 20px auto;
+}
+.addOption{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    height: 25px;
+    padding: 5px 0;
+    border-top: 1px solid #cdcdcd;
+}
+.addOption span{
+	width: 100px;
+	text-align: center;
+}
+.addOption input{
+	width: 70px;
+}
+.addOption button{
+	width: 25px;
+	height: 25px;
+}

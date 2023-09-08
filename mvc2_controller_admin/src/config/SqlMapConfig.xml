@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "HTTP://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<typeAliases>
+		<typeAlias alias="MemberVO" type="com.shop.VO.MemberVO"/>
+		<typeAlias alias="ProductVO" type="com.shop.VO.ProductVO"/>
+		<typeAlias alias="ProdOptionVO" type="com.shop.VO.ProdOptionVO"/>
+		<typeAlias alias="BasketVO" type="com.shop.VO.BasketVO"/>
+		<typeAlias alias="OrderProductVO" type="com.shop.VO.OrderProductVO"/>
+		<typeAlias alias="OrderVO" type="com.shop.VO.OrderVO"/>
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="com/shop/dao/AdminMapper.xml"/>
+	</mappers>
+		
+</configuration>

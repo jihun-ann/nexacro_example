@@ -1,0 +1,51 @@
+#order-wrap{
+	width: 800px;
+	min-height: 300px;
+	margin: 20px auto;
+}
+.prod-wrap{
+	width: 670px;
+	height: 200px;
+	margin: 20px auto;
+	display: flex;
+	align-items: center;
+}
+.prod-wrap img{
+	width: 250px;
+	height: 180px;
+	margin: 10px;
+}
+.prodInfo{
+	width: 400px;
+	min-height: 200px; 
+	padding: 20px;
+	box-sizing: border-box;
+	border-right: 1px solid #cdcdcd;
+}
+.prodName{
+	font-size: 30px;
+	font-weight: bold; 
+	margin: 0;
+	line-height: 50px;
+}
+.prodOption{
+	margin: 0;
+	color: grey;
+}
+.prodPrice{
+	float: right;
+	margin-right: 30px;
+}
+#orderTable{
+	min-width: 600px;
+	margin: 30px auto 60px;
+	text-align: center;
+	font-size: 17px;
+}
+#orderTable tr{
+	margin: 5px 0;
+	height: 40px;
+}
+#orderTable tr td:FIRST-CHILD {
+	border-right: 1px solid grey;
+}

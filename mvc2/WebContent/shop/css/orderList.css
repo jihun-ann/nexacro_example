@@ -1,0 +1,119 @@
+#orderList-wrap{
+	width: 750px;
+	min-height: 300px;
+	margin: 0 auto;
+	padding: 20px;
+	box-sizing: border-box;
+}
+#form-wrap{
+	width: 550px;
+	height: 30px;
+	line-height: 30px;
+	margin: 10px auto;
+	display: flex;
+	    justify-content: space-between;
+}
+#statusSelctor{
+	width: 120px;
+	height: 30px;
+}
+.order-wrap{
+	width: 600px;
+	height: 200px;
+	margin: 10px auto;
+	border: 1px solid #cdcdcd;
+	display: flex;
+	align-items: center;
+}
+.order-wrap img{
+	width: 200px;
+	height: 180px;
+	margin: 10px;
+}
+.orderInfo{
+	width: 280px;
+	height: 100%;
+	padding: 20px;
+    box-sizing: border-box;
+}
+.date{
+	color: grey;
+	margin: 0;
+}
+.prodname{
+	font-size: 22px;
+	margin: 0;
+	line-height: 50px;
+}
+.prodprice{
+    font-weight: bold;
+    line-height: 20px;
+    margin: 20px 0;
+}
+.orderInfoBtn{
+	margin: 10px auto;
+	background: none;
+	border: 1px solid grey;
+	border-radius: 3px;
+	width: 100px;
+	height: 25px;
+	display: block;
+	cursor: pointer;
+}
+.orderInfoBtn:hover{
+	background: #cdcdcd;
+	color:white;
+}
+.delStatus-wrap{
+	width: 100px;
+	height: 30px;
+	text-align: center;
+}
+.delStatus{
+	font-size: 15px;
+}
+.statusBtn{
+	display: block;
+    width: 70px;
+    height: 25px;
+    line-height: 25px;
+    border: 1px solid grey;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 15px;
+    margin: 10px auto;
+}
+.statusBtn:hover{
+	background: grey;
+	color: white;
+}
+#paging-wrap{
+	width: 100%;
+	height: 30px;
+	margin: 20px auto 30px;
+	display: flex;
+    justify-content: center;
+}
+#paging-wrap span{
+	margin: 0 5px;
+}
+.pagingBtn{
+	cursor: pointer;
+}
+#pageBtn-wrap span:HOVER{
+	color: blue;
+	font-size: x-large;
+}
+#searchForm-wrap{
+	margin: 20px auto;
+	width: 255px;
+	height: 30px;
+}
+#search{
+	height: 30px;
+	box-sizing: border-box;
+}
+#searchBtn{
+	height: 30px;
+	width: 70px;
+}
